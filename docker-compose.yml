@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  pgdata: {}
+  esdata: {}
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    image: ted_web
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - elasticsearch
+    env_file: .env
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    image: postgres:10.5
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  elasticsearch:
+    image: elasticsearch:6.6.1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"

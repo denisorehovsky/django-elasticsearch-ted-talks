@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Talk List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body>
+    <div id="app">
+        <div class="ui placeholder segment">
+            <div class="ui input focus">
+                <input
+                    v-model="query"
+                    type="text"
+                    placeholder="Search for talks..."
+                />
+            </div>
+        </div>
+        <div class="ui three column stackable grid container">
+            <div v-for="talk in talks" class="column">
+                <a class="ui card" :href="talk.url">
+                    <div class="content">
+                        <div class="header">[[ talk.name ]]</div>
+                        <div class="meta">[[ talk.speaker ]]</div>
+                        <div class="description">[[ talk.description ]]</div>
+                    </div>
+                    <div class="extra content">
+                        <i class="check icon"></i>
+                        [[ talk.number_of_views ]] Views
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/lodash"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: {
+                query: '',
+                talks: []
+            },
+            async created () {
+                this.talks = await this.getTalks()
+            },
+            methods: {
+                async getTalks () {
+                    const response = await axios.get('/api/v1/talks/', {
+                        params: {
+                            q: this.query
+                        }
+                    })
+                    return response.data.results
+                }
+            },
+            watch: {
+                query: _.debounce(async function () {
+                    this.talks = await this.getTalks()
+                }, 500)
+            }
+        })
+    </script>
+</body>
+</html>
