@@ -8,7 +8,10 @@ Simple web application example built with **Django** and **Elasticsearch** that 
     </p>
 </a>
 
-How to run:
+This repository is a source code for this article: [https://apirobot.me/posts/django-elasticsearch-searching-for-awesome-ted-talks](https://apirobot.me/posts/django-elasticsearch-searching-for-awesome-ted-talks)
+
+
+### How to run
 
 ```bash
 $ docker-compose up
