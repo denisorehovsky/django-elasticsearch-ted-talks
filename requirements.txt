@@ -1,6 +1,6 @@
 Django==2.2
 psycopg2==2.8.1
 django-elasticsearch-dsl==0.5.1
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 pyexcel==0.5.13
 pyexcel-io==0.5.17
