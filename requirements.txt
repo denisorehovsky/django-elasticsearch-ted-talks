@@ -1,4 +1,4 @@
-Django==2.2
+Django==2.2.24
 psycopg2==2.8.1
 django-elasticsearch-dsl==0.5.1
 djangorestframework==3.9.2
